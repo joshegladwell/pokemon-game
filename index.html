@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pokemon Batte</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato|Roboto|Roboto+Condensed|Roboto+Mono" >
+    <link rel='stylesheet' type='text/css' href='./loading-bar/loading-bar.css'>    
+    <link rel="stylesheet" type="text/css" media="screen" href="poke.css">
+    <script type='text/javascript' src='./loading-bar/loading-bar.js'></script>
+    <script type='text/javascript' src='pokemon.js'></script>
+</head>
+<body>
+    <div class='container'>
+        <form>
+            <fieldset class='trainer'>
+                <legend>Create your trainer and Party</legend>
+    
+                <label for='firstName'>First Name</label>
+                <input type='text' placeholder='First Name' name='firstName' id='firstName'>
+    
+                <br>
+    
+                <label for='lastName'>Last Name</label>
+                <input type='text' placeholder='Last Name' name='lastName' id='lastName'>
+    
+                <br><br>
+    
+                <label for='trainerType'>Trainer Type</label>
+                <select name='trainerType' id='trainerType'>
+                    <option value='bug_catcher'>Bug Catcher</option>
+                    <option value='biker'>Biker</option>
+                    <option value='hiker'>Hiker</option>
+                    <option value='bird_keeper'>Bird Keeper</option>
+                    <option value='blackbelt'>Blackbelt</option>
+                    <option value='burglar'>Burglar</option>
+                    <option value='lass'>Lass</option>
+                    <option value='youngster'>Youngster</option>
+                    <option value='fisherman'>Fisherman</option>
+                    <option value='super_nerd'>Super Nerd</option>
+                    <option value='bird_keeper'>Bird Keeper</option>
+                    <option value='beauty'>Beauty</option>
+                </select>
+    
+                <br><br>
+    
+                <label for='partyOne'>First Pokemon</label>
+                <select name='partyOne' id='partyOne'>
+                    <option value='0'>Bulbasaur</option>
+                    <option value='1'>Charmander</option>
+                    <option value='2'>Squirtle</option>
+                    <option value='3'>Pidgey</option>
+                    <option value='4'>Rattata</option>
+                    <option value='5'>Spearow</option>
+                    <option value='6'>Ekans</option>
+                    <option value='7'>Pikachu</option>
+                </select>
+                
+                <br>
+    
+                <label for='partyTwo'>Second Pokemon</label>
+                <select name='partyTwo' id='partyTwo'>
+                    <option value='0'>Bulbasaur</option>
+                    <option value='1'>Charmander</option>
+                    <option value='2'>Squirtle</option>
+                    <option value='3'>Pidgey</option>
+                    <option value='4'>Rattata</option>
+                    <option value='5'>Spearow</option>
+                    <option value='6'>Ekans</option>
+                    <option value='7'>Pikachu</option>
+                </select>
+    
+                <br>
+    
+                <label for='partyThree'>Third Pokemon</label>
+                <select name='partyThree' id='partyThree'>
+                    <option value='0'>Bulbasaur</option>
+                    <option value='1'>Charmander</option>
+                    <option value='2'>Squirtle</option>
+                    <option value='3'>Pidgey</option>
+                    <option value='4'>Rattata</option>
+                    <option value='5'>Spearow</option>
+                    <option value='6'>Ekans</option>
+                    <option value='7'>Pikachu</option>
+                </select>
+            </fieldset>
+            <br>
+            <button id='goBattle' type='button' onclick='battle()'>Go Battle!</button>
+        </form>
+        <br><br>
+
+        <div id='battle'>
+            <div class='sides'>
+                <div class='mySide side'>
+                    <div>
+                        <img id='mySprite' class='trainerSprite' src='' />
+                        <p id='myName'></p>
+                        <div id='myWinsLosses'>
+                            <p>Wins: <span id='myWins'></span></p>
+                            <p>Losses: <span id='myLosses'></span></p>
+                        </div>
+                    </div>
+                    
+                    <div class='myParty party'>
+                        <div id='myPokemon1' class='pokemon'>
+                            <img id='myPokemonImg1' src='' />
+                            <p id='myPokemonName1'></p>
+                            <div id="myPokemonHP1"></div>
+                        </div>
+
+                        <div id='myPokemon2' class='pokemon'>
+                            <img id='myPokemonImg2' src='' />
+                            <p id='myPokemonName2'></p>
+                            <div id="myPokemonHP2"></div>
+                        </div>
+
+                        <div id='myPokemon3' class='pokemon'>
+                            <img id='myPokemonImg3' src='' />
+                            <p id='myPokemonName3'></p>
+                            <div id="myPokemonHP3"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class='displays'>
+                    <div id='myDisplay' class='display'>
+                        <h3>Your move</h3>
+                        <p id='myMove'></p>
+                        <p id='myEffectiveness'></p>
+                        <p id='myExtra'></p>
+                        <p id='myFainted'></p>
+                    </div>
+                    <div id='oppDisplay' class='display'>
+                        <h3>Their move</h3>
+                        <p id='oppMove'></p>
+                        <p id='oppEffectiveness'></p>
+                        <p id='oppExtra'></p>
+                        <p id='oppFainted'></p>
+                    </div>
+                    <div id='overallDisplay' class='display'>
+                        <h3>Results</h3>
+                        <p id='overallDisplayText'></p>
+                    </div>
+                </div>
+                
+
+                <div class="oppSide side">
+                    <div class='oppParty party'>
+                        <div id="oppPokemon1" class="pokemon">
+                            <img id='oppPokemonImg1' src='' />
+                            <p id='oppPokemonName1'></p>
+                            <div id="oppPokemonHP1"></div>
+                        </div>
+                        <div id="oppPokemon2" class="pokemon">
+                            <img id='oppPokemonImg2' src='' />
+                            <p id='oppPokemonName2'></p>
+                            <div id="oppPokemonHP2"></div>
+                        </div>
+                        <div id="oppPokemon3" class="pokemon">
+                            <img id='oppPokemonImg3' src='' />
+                            <p id='oppPokemonName3'></p>
+                            <div id="oppPokemonHP3"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <img id='oppSprite' class='trainerSprite' src='' />
+                        <p id='oppName'></p>
+                        <div id='oppWinsLosses'>
+                            <p>Wins: <span id='oppWins'></span></p>
+                            <p>Losses: <span id='oppLosses'></span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class='moves'>
+                <button onclick='attack()' name='btnAttack' id='btnAttack' style="visibility: hidden;">Attack!</i>
+            </div>
+
+            <div class='restart hidden'>
+                <button onclick='restart()' name='btnRestart' id='btnRestart' style="visibility: hidden;">Restart</button>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        class Person {
+            firstName;
+            lastName;
+
+            constructor(firstName, lastName) {
+                this.firstName = firstName;
+                this.lastName = lastName;
+            }
+        }
+        class Pokemon {
+            name;
+            type;
+            image;
+            healthPower = 100;
+
+            constructor(name, type, image) {
+                this.name = name;
+                this.type = type;
+                this.image = image;
+            }
+
+            updateHealthPower(healthPower, PokemonBarIndex) {
+                this.healthPower = healthPower;
+                aoBar[PokemonBarIndex].set(this.healthPower);
+            }
+        }
+        class Trainer extends Person {
+            type;
+            party = [];
+            currPokemon;
+            currPokemonIndex = 0;
+            wins = 0;
+            losses = 0;
+
+            constructor(firstName, lastName, type) {
+                super(firstName, lastName);
+                this.firstName = firstName;
+                this.lastName = lastName;
+                this.type = type;
+
+            }
+
+            addPokemonToParty(iPokemonObject) {
+                this.party.push(new Pokemon(pokemonArray[iPokemonObject][0], pokemonArray[iPokemonObject][1], pokemonArray[iPokemonObject][2]))
+            }
+
+            nextPokemon() {
+                this.currPokemonIndex++;
+                this.currPokemon = this.party[this.currPokemonIndex];
+            }
+
+            clearParty() {
+                this.party = [];
+            }
+        }
+        //declare trainer objects
+        var oMyTrainer;
+        var oOppTrainer;
+        
+        function battle() {
+            if (document.getElementById('firstName').value == "") {
+                //alert user to enter first name
+                alert("You must enter a first name.");
+                document.getElementById('firstName').focus();
+            }
+            else if (document.getElementById('lastName').value == "") {
+                //alert user to enter last name
+                alert("You must enter a last name.");
+                document.getElementById('lastName').focus();
+            }
+            else {
+                //clear display boxes
+                document.getElementById('myMove').innerHTML = "";
+                document.getElementById('myEffectiveness').innerHTML = "";
+                document.getElementById('myExtra').innerHTML = "";
+                document.getElementById('myFainted').innerHTML = "";
+
+                document.getElementById('oppMove').innerHTML = "";
+                document.getElementById('oppEffectiveness').innerHTML = "";
+                document.getElementById('oppExtra').innerHTML = "";
+                document.getElementById('oppFainted').innerHTML = "";
+
+                document.getElementById('overallDisplayText').innerHTML = "";
+
+                //declare variables
+                let sMyTrainerType = document.getElementById('trainerType').value;
+                let sMyFirstName = document.getElementById('firstName').value;
+                let sMyLastName = document.getElementById('lastName').value;
+                let iMyFirstPokemon = document.getElementById('partyOne').value;
+                let iMySecondPokemon = document.getElementById('partyTwo').value;
+                let iMyThirdPokemon = document.getElementById('partyThree').value;
+                let sOppTrainerType = "Team_Rocket"
+                let sOppFirstName = "Team";
+                let sOppLastName = "Rocket";
+                let iOppFirstPokemon = Math.floor(Math.random()*8).toString();
+                let iOppSecondPokemon = Math.floor(Math.random()*8).toString();
+                let iOppThirdPokemon = Math.floor(Math.random()*8).toString();
+
+                oMyTrainer = new Trainer(sMyFirstName, sMyLastName, sMyTrainerType);
+                oOppTrainer = new Trainer(sOppFirstName, sOppLastName, sOppTrainerType);
+                aoBar = [];
+
+                //display trainerType image
+                document.getElementById('mySprite').src = "images/" + oMyTrainer.type + ".png";
+
+                //display my name
+                document.getElementById('myName').innerHTML = oMyTrainer.firstName + " " + oMyTrainer.lastName;
+
+                //add my pokemon to my party
+                oMyTrainer.addPokemonToParty(iMyFirstPokemon);
+                oMyTrainer.addPokemonToParty(iMySecondPokemon);
+                oMyTrainer.addPokemonToParty(iMyThirdPokemon);
+
+                //display my pokemon names
+                document.getElementById('myPokemonName1').innerHTML = oMyTrainer.party[0].name;
+                document.getElementById('myPokemonName2').innerHTML = oMyTrainer.party[1].name;
+                document.getElementById('myPokemonName3').innerHTML = oMyTrainer.party[2].name;
+
+                //display my pokemon images
+                document.getElementById('myPokemonImg1').src = oMyTrainer.party[0].image;
+                document.getElementById('myPokemonImg2').src = oMyTrainer.party[1].image;
+                document.getElementById('myPokemonImg3').src = oMyTrainer.party[2].image;
+
+                //display my win/loss record
+                document.getElementById('myWins').innerHTML = oMyTrainer.wins;
+                document.getElementById('myLosses').innerHTML = oMyTrainer.losses;
+
+                //display myPokemonHP1
+                aoBar[0] = new ldBar("#myPokemonHP1");
+                aoBar[0].set(oMyTrainer.party[0].healthPower);
+
+                //display myPokemonHP2
+                aoBar[1] = new ldBar("#myPokemonHP2");
+                aoBar[1].set(oMyTrainer.party[1].healthPower);
+
+                //display myPokemonHP3
+                aoBar[2] = new ldBar("#myPokemonHP3");
+                aoBar[2].set(oMyTrainer.party[2].healthPower);
+
+                //display opponent trainerType image (always Team Rocket)
+                document.getElementById('oppSprite').src = "images/" + oOppTrainer.type + ".png";
+
+                //display opponent name (always Team Rocket)
+                document.getElementById('oppName').innerHTML = oOppTrainer.firstName + " " + oOppTrainer.lastName;
+
+                //add opponent pokemon to party
+                oOppTrainer.addPokemonToParty(iOppFirstPokemon);
+                oOppTrainer.addPokemonToParty(iOppSecondPokemon);
+                oOppTrainer.addPokemonToParty(iOppThirdPokemon);
+
+                //display opponent pokemon names
+                document.getElementById('oppPokemonName1').innerHTML = oOppTrainer.party[0].name;
+                document.getElementById('oppPokemonName2').innerHTML = oOppTrainer.party[1].name;
+                document.getElementById('oppPokemonName3').innerHTML = oOppTrainer.party[2].name;
+
+                //display opponent pokemon images (randomized)
+                document.getElementById('oppPokemonImg1').src = oOppTrainer.party[0].image;
+                document.getElementById('oppPokemonImg2').src = oOppTrainer.party[1].image;
+                document.getElementById('oppPokemonImg3').src = oOppTrainer.party[2].image;
+
+                //display opponent win/loss record
+                document.getElementById('oppWins').innerHTML = oOppTrainer.wins;
+                document.getElementById('oppLosses').innerHTML = oOppTrainer.losses;
+
+                //display oppPokemonHP1
+                aoBar[3] = new ldBar("#oppPokemonHP1");
+                // var bar2op1 = document.getElementById('oppPokemonHP1').ldBar;
+                aoBar[3].set(oMyTrainer.party[0].healthPower);
+
+                //display oppPokemonHP2
+                aoBar[4] = new ldBar("#oppPokemonHP2");
+                // var bar2op2 = document.getElementById('oppPokemonHP2').ldBar;
+                aoBar[4].set(oMyTrainer.party[1].healthPower);
+
+                //display oppPokemonHP3
+                aoBar[5] = new ldBar("#oppPokemonHP3");
+                // var bar2op3 = document.getElementById('oppPokemonHP3').ldBar;
+                aoBar[5].set(oMyTrainer.party[2].healthPower);
+
+                //make attack button visible
+                document.getElementById('btnAttack').style.visibility = "visible";
+            }
+        }
+
+        function attack() {
+            //set display boxes to blank
+            document.getElementById('myMove').innerHTML = "";
+            document.getElementById('myEffectiveness').innerHTML = "";
+            document.getElementById('myExtra').innerHTML = "";
+            document.getElementById('myFainted').innerHTML = "";
+
+            document.getElementById('oppMove').innerHTML = "";
+            document.getElementById('oppEffectiveness').innerHTML = "";
+            document.getElementById('oppExtra').innerHTML = "";
+            document.getElementById('oppFainted').innerHTML = "";
+
+            //set my current pokemon
+            if (oMyTrainer.party[0].healthPower > 0) {
+                oMyTrainer.currPokemonIndex = 0;
+                oMyTrainer.currPokemon = oMyTrainer.party[oMyTrainer.currPokemonIndex];
+            }
+            else if (oMyTrainer.party[1].healthPower > 0) {
+                oMyTrainer.currPokemonIndex = 1;
+                oMyTrainer.currPokemon = oMyTrainer.party[oMyTrainer.currPokemonIndex];
+            }
+            else if (oMyTrainer.party[2].healthPower > 0) {
+                oMyTrainer.currPokemonIndex = 2;
+                oMyTrainer.currPokemon = oMyTrainer.party[oMyTrainer.currPokemonIndex];
+            }
+
+            //set opponent current pokemon
+            if (oOppTrainer.party[0].healthPower > 0) {
+                oOppTrainer.currPokemonIndex = 0;
+                oOppTrainer.currPokemon = oOppTrainer.party[oOppTrainer.currPokemonIndex];
+            }
+            else if (oOppTrainer.party[1].healthPower > 0) {
+                oOppTrainer.currPokemonIndex = 1;
+                oOppTrainer.currPokemon = oOppTrainer.party[oOppTrainer.currPokemonIndex];
+            }
+            else if (oOppTrainer.party[2].healthPower > 0) {
+                oOppTrainer.currPokemonIndex = 2;
+                oOppTrainer.currPokemon = oOppTrainer.party[oOppTrainer.currPokemonIndex];
+            }
+
+            //start with my trainer attack
+
+            //calculate attack power
+            //damage
+            let iDamage = 10;
+
+            //effectiveness
+            let iEffectiveness = 0;
+            if (oMyTrainer.currPokemon.type == oOppTrainer.currPokemon.type) {
+                iEffectiveness = .5;
+            }
+            else if (oMyTrainer.currPokemon.type == "Fire" && oOppTrainer.currPokemon.type == "Water") {
+                iEffectiveness = .5;
+            }
+            else if (oMyTrainer.currPokemon.type == "Fire" && oOppTrainer.currPokemon.type == "Grass") {
+                iEffectiveness = 1.5;
+            }
+            else if (oMyTrainer.currPokemon.type == "Water" && oOppTrainer.currPokemon.type == "Fire") {
+                iEffectiveness = 1.5;
+            }
+            else if (oMyTrainer.currPokemon.type == "Water" && oOppTrainer.currPokemon.type == "Grass") {
+                iEffectiveness = .5;
+            }
+            else if (oMyTrainer.currPokemon.type == "Grass" && oOppTrainer.currPokemon.type == "Fire") {
+                iEffectiveness = .5;
+            }
+            else if (oMyTrainer.currPokemon.type == "Grass" && oOppTrainer.currPokemon.type == "Water") {
+                iEffectiveness = 1.5;
+            }
+            else {
+                iEffectiveness = 1;
+            }
+
+            //multiplier
+            let iMultiplier = Math.random();
+
+            //initiate my trainer attack (including displays)
+            //display my move message in my move box
+            document.getElementById('myMove').innerHTML = oMyTrainer.currPokemon.name + " attacks!";
+
+            //display miss or critical hit message, end if miss
+            if (iMultiplier <= .1) {
+                document.getElementById('myExtra').innerHTML = "But it missed...";
+            }
+            else {
+                if (iMultiplier >= .9) {
+                    document.getElementById('myExtra').innerHTML = "Critical Hit";
+                }
+
+                //display effectiveness if applicable
+                if (iEffectiveness == 1.5) {
+                    document.getElementById('myEffectiveness').innerHTML = "It was super effective!";
+                }
+                else if (iEffectiveness == .5) {
+                    document.getElementById('myEffectiveness').innerHTML = "It was not very effective...";
+                }
+
+                //calculate attack power
+                let iAttack = iDamage * iEffectiveness * iMultiplier;
+
+                //inflict attack power on opponent currPokemon health and display in load bar
+                var iPokemonBarIndex = oOppTrainer.currPokemonIndex + 3;
+                oOppTrainer.currPokemon.updateHealthPower(oOppTrainer.currPokemon.healthPower - iAttack, iPokemonBarIndex);
+            }
+
+            //display if fainted
+            if (oOppTrainer.currPokemon.healthPower < .5) {
+                document.getElementById('myFainted').innerHTML = oOppTrainer.currPokemon.name + " fainted!";
+                oOppTrainer.nextPokemon();
+            }
+            
+            //update w/l record if applicable
+            if (oOppTrainer.currPokemonIndex > 2) {
+                document.getElementById('overallDisplayText').innerHTML = oMyTrainer.firstName + " " + oMyTrainer.lastName + " wins!";
+                oMyTrainer.wins++;
+                oOppTrainer.losses++;
+
+                //update win/loss record
+                document.getElementById('myWins').innerHTML = oMyTrainer.wins;
+                document.getElementById('oppLosses').innerHTML = oOppTrainer.losses;
+                
+                //make restart button visible
+                document.getElementById('btnAttack').style.visibility = "hidden";
+                document.getElementById('btnRestart').style.visibility = "visible";
+            }
+
+            //opponent trainer attack
+            //calculate attack power
+            //damage
+            iDamage = 10;
+
+            //effectiveness
+            iEffectiveness = 0;
+            if (oOppTrainer.currPokemon.type == oMyTrainer.currPokemon.type) {
+                iEffectiveness = .5;
+            }
+            else if (oOppTrainer.currPokemon.type == "Fire" && oMyTrainer.currPokemon.type == "Water") {
+                iEffectiveness = .5;
+            }
+            else if (oOppTrainer.currPokemon.type == "Fire" && oMyTrainer.currPokemon.type == "Grass") {
+                iEffectiveness = 1.5;
+            }
+            else if (oOppTrainer.currPokemon.type == "Water" && oMyTrainer.currPokemon.type == "Fire") {
+                iEffectiveness = 1.5;
+            }
+            else if (oOppTrainer.currPokemon.type == "Water" && oMyTrainer.currPokemon.type == "Grass") {
+                iEffectiveness = .5;
+            }
+            else if (oOppTrainer.currPokemon.type == "Grass" && oMyTrainer.currPokemon.type == "Fire") {
+                iEffectiveness = .5;
+            }
+            else if (oOppTrainer.currPokemon.type == "Grass" && oMyTrainer.currPokemon.type == "Water") {
+                iEffectiveness = 1.5;
+            }
+            else {
+                iEffectiveness = 1;
+            }
+
+            //multiplier
+            iMultiplier = Math.random();
+
+            //initiate my trainer attack (including displays)
+            //display my move message in my move box
+            document.getElementById('oppMove').innerHTML = oOppTrainer.currPokemon.name + " attacks!";
+
+            //display miss or critical hit message, end if miss
+            if (iMultiplier <= .1) {
+                document.getElementById('oppExtra').innerHTML = "But it missed...";
+            }
+            else {
+                if (iMultiplier >= .9) {
+                    document.getElementById('oppExtra').innerHTML = "Critical Hit";
+                }
+
+                //display effectiveness if applicable
+                if (iEffectiveness == 1.5) {
+                    document.getElementById('oppEffectiveness').innerHTML = "It was super effective!";
+                }
+                else if (iEffectiveness == .5) {
+                    document.getElementById('oppEffectiveness').innerHTML = "It was not very effective...";
+                }
+
+                //calculate attack power
+                let iAttack = iDamage * iEffectiveness * iMultiplier;
+
+                //inflict attack power on opponent currPokemon health and display in load bar
+                iPokemonBarIndex = oMyTrainer.currPokemonIndex;
+                oMyTrainer.currPokemon.updateHealthPower(oMyTrainer.currPokemon.healthPower - iAttack, iPokemonBarIndex);
+            }
+
+            //display if fainted
+            if (oMyTrainer.currPokemon.healthPower < .5) {
+                document.getElementById('oppFainted').innerHTML = oMyTrainer.currPokemon.name + " fainted!";
+                oMyTrainer.nextPokemon();
+            }
+            
+            //update w/l record if applicable
+            if (oMyTrainer.currPokemonIndex > 2) {
+                document.getElementById('overallDisplayText').innerHTML = oOppTrainer.firstName + " " + oOppTrainer.lastName + " wins!";
+                oOppTrainer.wins++;
+                oMyTrainer.losses++;
+
+                //update win/loss record
+                document.getElementById('oppWins').innerHTML = oOppTrainer.wins;
+                document.getElementById('myLosses').innerHTML = oMyTrainer.losses;
+                
+                //make restart button visible
+                document.getElementById('btnAttack').style.visibility = "hidden";
+                document.getElementById('btnRestart').style.visibility = "visible";
+            }
+        }
+
+        function restart() {
+            //reset all my pokemon health counts to 100
+            for (var iCount = 0; iCount <= 2; iCount++) {
+                oMyTrainer.party[iCount].updateHealthPower(100, iCount);
+            }
+
+            //reset all opponent pokemon health counts to 100
+            for (iCount = 0; iCount <= 2; iCount++) {
+                oOppTrainer.party[iCount].updateHealthPower(100, iCount + 3);
+            }
+
+            //clear display boxes
+            document.getElementById('myMove').innerHTML = "";
+            document.getElementById('myEffectiveness').innerHTML = "";
+            document.getElementById('myExtra').innerHTML = "";
+            document.getElementById('myFainted').innerHTML = "";
+
+            document.getElementById('oppMove').innerHTML = "";
+            document.getElementById('oppEffectiveness').innerHTML = "";
+            document.getElementById('oppExtra').innerHTML = "";
+            document.getElementById('oppFainted').innerHTML = "";
+
+            document.getElementById('overallDisplayText').innerHTML = "";
+
+            //reset current pokemons
+            oMyTrainer.currPokemon = oMyTrainer.party[0];
+            oMyTrainer.currPokemonIndex = 0;
+
+            oOppTrainer.currPokemon = oMyTrainer.party[0];
+            oOppTrainer.currPokemonIndex = 0;
+
+            //replace restart button with attack button
+            document.getElementById('btnRestart').style.visibility = "hidden";
+            document.getElementById('btnAttack').style.visibility = "visible";
+        }
+    </script>
+</body>
+</html>
